@@ -1,7 +1,8 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 import { db } from "@/lib/db";
 import { Session } from "next-auth";
+import { authOptions } from "@/app/option";
 
 interface UserInfo {
     session: Session | null;
