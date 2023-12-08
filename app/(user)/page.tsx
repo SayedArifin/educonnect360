@@ -1,12 +1,12 @@
 import { BiSearchAlt } from "react-icons/bi";
 import { SiAcclaim } from "react-icons/si";
 
-import { AiOutlineGoogle } from "react-icons/ai";
 import FeaturedUniversity from "@/components/FeaturedUniversity";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import NextImage from "next/image";
 import Link from "next/link";
+import SigninButton from "@/components/SigninButton";
 
 interface pageProps {
 }
@@ -68,15 +68,12 @@ const page: React.FC<pageProps> = () => {
 						<Button color="danger" variant="ghost" className="w-full shadow-lg">
 							<Link className="flex justify-center items-center" href={"/compare"}><span className="mr-2"><SiAcclaim /></span>Compare</Link>
 						</Button>
-						<Button color="danger" variant="shadow" className="w-full ">
-							<Link className="flex justify-center items-center" href={"/"}><span className="mr-2"><AiOutlineGoogle /></span>Signin with Google</Link>
-						</Button>
+						<SigninButton />
 
 					</div>
 				</div>
 				<div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
 					<Image
-						isBlurred
 						as={NextImage}
 						width={500}
 						height={500}
