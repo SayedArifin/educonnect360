@@ -1,17 +1,27 @@
-import { BiSearchAlt } from "react-icons/bi";
+import { FaUniversity } from "react-icons/fa";
+import { BiEdit, BiSearchAlt } from "react-icons/bi";
 import { SiAcclaim } from "react-icons/si";
-
+import { Select, SelectItem } from "@nextui-org/react";
 import FeaturedUniversity from "@/components/FeaturedUniversity";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import NextImage from "next/image";
 import Link from "next/link";
 import SigninButton from "@/components/SigninButton";
+import userInfo from "@/FetchFuction/UserRole";
+
 
 interface pageProps {
 }
 
-const page: React.FC<pageProps> = () => {
+const page: React.FC<pageProps> = async () => {
+	const { role } = await userInfo();
+	const server = async (formData: FormData) => {
+		"use server"
+		const fruit = formData.getAll('fruit');
+		console.log(fruit);
+	}
+
 	const featuredUniversities = [
 		{
 			href: "#",
@@ -83,47 +93,39 @@ const page: React.FC<pageProps> = () => {
 					/>
 				</div>
 				<div className="fixed bottom-5 right-10 z-[9999]">
-					{/* {data && data.user.user_role === 2 && (
-			<div class="group relative">
-			  <Link
-				className="hover:text-primary-red "
-				href={"/admin_dashboard"}
-			  >
-				<RiAdminFill size={30} />
-			  </Link>
-			  <span
-				class="absolute -top-14 left-[50%] -translate-x-[50%] 
-z-20 origin-left scale-0 px-3 rounded-lg border 
- py-2 text-sm font-bold
-shadow-md transition-all duration-300 ease-in-out 
-group-hover:scale-100"
-			  >
-				Admin<span></span>
-			  </span>
-			</div>
-		  )} */}
-					{/* {data && data.user.user_role === 1 && (
-			<div class="group relative">
-			  <Link
-				className="hover:text-primary-red "
-				href={"/editor_dashboard"}
-			  >
-				<BiEdit size={30} />
-			  </Link>
-			  <span
-				class="absolute -top-14 left-[50%] -translate-x-[50%] 
-z-20 origin-left scale-0 px-3 rounded-lg border 
- py-2 text-sm font-bold
-shadow-md transition-all duration-300 ease-in-out 
-group-hover:scale-100"
-			  >
-				Editor<span></span>
-			  </span>
-			</div>
-		  )} */}
+
+					{role && role.role === "0" && (
+						<div className="group relative">
+							<Link className="hover:text-primary-red" href={"/university"}>
+
+								<FaUniversity size={30} />
+							</Link>
+							<span className="absolute -top-14 left-[50%] -translate-x-[50%] z-20 origin-left scale-0 px-3 rounded-lg border py-2 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100">
+								University Dashboard
+							</span>
+						</div>
+					)}
+
+
+					{role && role.role === "2" && (
+						<div className="group relative">
+							<Link
+								className="hover:text-primary-red "
+								href={"/editor_dashboard"}
+							>
+								<BiEdit size={30} />
+							</Link>
+							<span
+								className="absolute -top-14 left-[50%] -translate-x-[50%] z-20 origin-left scale-0 px-3 rounded-lg border  py-2 text-sm font-bold
+shadow-md transition-all duration-300 ease-in-out group-hover:scale-100"
+							>
+								Editor
+							</span>
+						</div>
+					)}
 				</div>
 			</div>
-		</div>
+		</div >
 		<section>
 			<div className="max-w-screen-xl px-4 py-4 mx-auto lg:pb-16 lg:py-0">
 				<div className="grid grid-cols-2 gap-8 sm:gap-12 sm:grid-cols-3 lg:grid-cols-6">
@@ -138,6 +140,19 @@ group-hover:scale-100"
 				</div>
 			</div>
 		</section>
+		<div className="">
+			<form action={server}>
+				<select id="small" className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					<option selected>Choose a country</option>
+					<option value="US">United States</option>
+					<option value="CA">Canada</option>
+					<option value="FR">France</option>
+					<option value="DE">Germany</option>
+				</select>
+
+				<button>save</button>
+			</form>
+		</div>
 	</>;
 };
 
