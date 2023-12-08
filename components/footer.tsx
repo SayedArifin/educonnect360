@@ -13,7 +13,11 @@ const Footer: React.FC<footerProps> = () => {
                     <div className="mb-6 md:mb-0">
                         <Link href="/" className="flex items-center font-bold">
                             EduConnect<span className="text-red-600">360</span>°
+
                         </Link>
+
+                        <a href="/register_university" target="_blank" className="hover:underline py-5">Add Your University</a>
+
                     </div>
                     <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                         <div>
@@ -25,6 +29,7 @@ const Footer: React.FC<footerProps> = () => {
                                 <li>
                                     <a href="http://www.educationboard.gov.bd/" target="_blank" className="hover:underline">Ministry of Education</a>
                                 </li>
+
                             </ul>
                         </div>
                         <div>

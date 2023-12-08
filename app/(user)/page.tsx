@@ -15,12 +15,6 @@ import userInfo from "@/FetchFuction/UserRole";
 
 const page = async () => {
 	const { role } = await userInfo();
-	const server = async (formData: FormData) => {
-		"use server"
-		const fruit = formData.getAll('fruit');
-		console.log(fruit);
-	}
-
 	const featuredUniversities = [
 		{
 			href: "#",
@@ -93,7 +87,7 @@ const page = async () => {
 				</div>
 				<div className="fixed bottom-5 right-10 z-[9999]">
 
-					{role && role.role === "0" && (
+					{role && role.role === "1" && (
 						<div className="group relative">
 							<Link className="hover:text-primary-red" href={"/university"}>
 
@@ -139,19 +133,7 @@ shadow-md transition-all duration-300 ease-in-out group-hover:scale-100"
 				</div>
 			</div>
 		</section>
-		<div className="">
-			<form action={server}>
-				<select id="small" className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-					<option selected>Choose a country</option>
-					<option value="US">United States</option>
-					<option value="CA">Canada</option>
-					<option value="FR">France</option>
-					<option value="DE">Germany</option>
-				</select>
 
-				<button>save</button>
-			</form>
-		</div>
 	</>;
 };
 
