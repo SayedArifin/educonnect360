@@ -1,7 +1,7 @@
 import { FaUniversity } from "react-icons/fa";
 import { BiEdit, BiSearchAlt } from "react-icons/bi";
 import { SiAcclaim } from "react-icons/si";
-import { Select, SelectItem } from "@nextui-org/react";
+
 import FeaturedUniversity from "@/components/FeaturedUniversity";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
@@ -11,10 +11,9 @@ import SigninButton from "@/components/SigninButton";
 import userInfo from "@/FetchFuction/UserRole";
 
 
-interface pageProps {
-}
 
-const page: React.FC<pageProps> = async () => {
+
+const page = async () => {
 	const { role } = await userInfo();
 	const server = async (formData: FormData) => {
 		"use server"
