@@ -19,3 +19,14 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model ApplyUniversity {
+  id                 String @id @default(uuid()) @map("_id")
+  r_email            String @unique
+  r_name             String
+  r_number           String
+  university_name    String
+  university_website String
+  application_status Int    @default(0)
+  kyc_date           String @default("")
+}

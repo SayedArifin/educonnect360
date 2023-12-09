@@ -1,7 +1,9 @@
+
 import { AiOutlineWarning } from "react-icons/ai";
 import SubmitButton from "@/components/SubmitButton";
 import { Input } from "@nextui-org/react";
 import { Chip } from "@nextui-org/react";
+import { db } from "@/lib/db";
 interface RegisterUniversityFormProps {
     email: string | undefined;
 }
@@ -10,21 +12,32 @@ const RegisterUniversityForm: React.FC<RegisterUniversityFormProps> = ({ email =
 
     const onApply = async (formData: FormData) => {
         "use server"
-        const r_email = formData.get("r_email")
-        const university_name = formData.get("university_name")
-        const university_website = formData.get("university_website")
-        const r_name = formData.get("r_name")
-        const r_number = formData.get("r_number")
+        const r_email = formData.get("r_email") as string;
+        const university_name = formData.get("university_name") as string;
+        const university_website = formData.get("university_website") as string;
+        const r_name = formData.get("r_name") as string;
+        const r_number = formData.get("r_number") as string;
 
         if (r_email === "" || r_name === "" || r_number === "" || university_name === "" || university_website === "") {
             return;
 
         } else {
+            try {
+                await db.applyUniversity.create({
+                    data: {
+                        r_email,
+                        r_name,
+                        r_number,
+                        university_name,
+                        university_website
 
+                    }
+                })
+            } catch (error) {
+
+
+            }
         }
-
-
-
 
     }
     return <div >

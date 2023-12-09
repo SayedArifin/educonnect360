@@ -8,6 +8,7 @@ interface SubmitButtonProps {
 
 const SubmitButton: React.FC<SubmitButtonProps> = ({ text }) => {
     const { pending } = useFormStatus();
+
     return <div><Button isLoading={pending} type="submit" variant="ghost" color="danger" className="w-fit">{text}</Button></div>;
 };
 

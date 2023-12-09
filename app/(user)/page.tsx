@@ -104,7 +104,7 @@ const page = async () => {
 						<div className="group relative">
 							<Link
 								className="hover:text-primary-red "
-								href={"/editor_dashboard"}
+								href={"/admin_dashboard"}
 							>
 								<BiEdit size={30} />
 							</Link>
