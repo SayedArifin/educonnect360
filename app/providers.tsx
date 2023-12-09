@@ -1,5 +1,5 @@
 "use client";
-
+import { Toaster } from 'sonner'
 import * as React from "react";
 import { NextUIProvider } from "@nextui-org/system";
 import { useRouter } from 'next/navigation'
@@ -17,7 +17,9 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 	return (
 		<NextUIProvider navigate={router.push}>
 			<NextThemesProvider {...themeProps}>
-				<SessionProvider>{children}</SessionProvider>
+				<SessionProvider>
+					<Toaster />
+					{children}</SessionProvider>
 			</NextThemesProvider>
 		</NextUIProvider>
 	);

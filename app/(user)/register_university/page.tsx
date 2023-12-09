@@ -6,6 +6,7 @@ import RegisterUniversityForm from "../_component/RegisterUniversityForm";
 export default async function page() {
     const { role, session } = await userInfo();
 
+
     return (
         <Card>
             {role && role.role === "0" ? (
