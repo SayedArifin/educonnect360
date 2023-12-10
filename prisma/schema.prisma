@@ -30,3 +30,10 @@ model ApplyUniversity {
   application_status Int    @default(0)
   kyc_date           String @default("")
 }
+
+model FeaturedUniversity {
+  id              String  @id @default(uuid()) @map("_id")
+  university_name String
+  image_url       String
+  href            String?
+}

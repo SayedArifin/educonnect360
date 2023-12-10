@@ -1,16 +1,15 @@
 import { Image } from "@nextui-org/image";
+import { FeaturedUniversity } from "@prisma/client";
 import NextImage from "next/image";
 import Link from "next/link";
 interface FeaturedUniversityProps {
-    href: string;
-    src: string;
-    alt?: string;
+    data: FeaturedUniversity;
 }
 
-const FeaturedUniversity: React.FC<FeaturedUniversityProps> = ({ href, src, alt = "University" }) => {
+const FeaturedUniversity: React.FC<FeaturedUniversityProps> = ({ data }) => {
 
     return <Link
-        href={href}
+        href={data.href || ""}
         className="flex items-center lg:justify-center hover:scale-110 transition-transform"
     >
         <Image
@@ -18,8 +17,8 @@ const FeaturedUniversity: React.FC<FeaturedUniversityProps> = ({ href, src, alt 
             as={NextImage}
             width={200}
             height={200}
-            src={src}
-            alt={alt}
+            src={data.image_url}
+            alt={data.university_name}
             className="swing-in-top-fwd invert dark:invert-0"
         />
     </Link>;

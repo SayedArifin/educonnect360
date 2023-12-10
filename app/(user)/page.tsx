@@ -9,44 +9,15 @@ import NextImage from "next/image";
 import Link from "next/link";
 import SigninButton from "@/components/SigninButton";
 import userInfo from "@/FetchFuction/UserRole";
+import { db } from "@/lib/db";
 
 
 
 
 const page = async () => {
 	const { role } = await userInfo();
-	const featuredUniversities = [
-		{
-			href: "#",
-			src: "/images/1.png",
-			alt: "University Logo",
-		},
-		{
-			href: "#",
-			src: "/images/2.png",
-			alt: "University Logo",
-		},
-		{
-			href: "#",
-			src: "/images/3.png",
-			alt: "University Logo",
-		},
-		{
-			href: "#",
-			src: "/images/4.png",
-			alt: "University Logo",
-		},
-		{
-			href: "#",
-			src: "/images/5.png",
-			alt: "University Logo",
-		},
-		{
-			href: "#",
-			src: "/images/6.png",
-			alt: "University Logo",
-		},
-	];
+
+	const featuredUniversities = await db.featuredUniversity.findMany()
 	return <>
 		<div className="max-w-7xl mx-auto  lg:pt-0 ">
 			<div className="grid max-w-screen-xl px-4   mx-auto lg:gap-8 xl:gap-0  lg:grid-cols-12  ">
@@ -112,7 +83,7 @@ const page = async () => {
 								className="absolute -top-14 left-[50%] -translate-x-[50%] z-20 origin-left scale-0 px-3 rounded-lg border  py-2 text-sm font-bold
 shadow-md transition-all duration-300 ease-in-out group-hover:scale-100"
 							>
-								Editor
+								Admin
 							</span>
 						</div>
 					)}
@@ -125,9 +96,7 @@ shadow-md transition-all duration-300 ease-in-out group-hover:scale-100"
 					{featuredUniversities.map((university, index) => (
 						<FeaturedUniversity
 							key={index}
-							href={university.href}
-							src={university.src}
-							alt={university.alt}
+							data={university}
 						/>
 					))}
 				</div>

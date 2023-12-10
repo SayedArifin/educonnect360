@@ -12,13 +12,18 @@ interface UserInfo {
 }
 
 const userInfo = async (): Promise<UserInfo> => {
+    let role = null;
+
     const session = await getServerSession(authOptions);
-    const role = await db.user.findFirst({
-        where: { email: session?.user?.email as string },
-        select: { role: true },
-    });
+    if (session) {
+        role = await db.user.findFirst({
+            where: { email: session?.user?.email as string },
+            select: { role: true },
+        });
+    }
 
     return { session, role };
 };
 
 export default userInfo;
+
