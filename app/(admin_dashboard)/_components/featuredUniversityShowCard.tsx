@@ -1,6 +1,8 @@
 import { Card, CardFooter, Image, Button, CardBody } from "@nextui-org/react";
 import NextImage from "next/image";
 import { FeaturedUniversity } from "@prisma/client";
+import FeaturedUniversityEditModal from "./FeaturedUniversityEditModal";
+import { Suspense } from "react";
 interface featuredUniversityShowCardProps {
     data: FeaturedUniversity
 }
@@ -21,7 +23,9 @@ const FeaturedUniversityShowCard: React.FC<featuredUniversityShowCardProps> = ({
         </CardBody>
         <CardFooter className="text-small justify-between">
             <b className="overflow-hidden">{data.university_name}</b>
-            <Button variant="solid">Change</Button>
+            <Suspense fallback={<>please wait</>}>
+                <FeaturedUniversityEditModal data={data} />
+            </Suspense>
         </CardFooter>
     </Card>
 
