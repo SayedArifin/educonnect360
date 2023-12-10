@@ -1,11 +1,7 @@
 
 import FeaturedUniversityShowCard from "../../_components/featuredUniversityShowCard";
 import { db } from "@/lib/db";
-
-interface pageProps {
-}
-
-const page: React.FC<pageProps> = async () => {
+const page = async () => {
     const featuredUniversity = await db.featuredUniversity.findMany()
     return (
         <>

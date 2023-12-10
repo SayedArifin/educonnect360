@@ -10,10 +10,6 @@ import Link from "next/link";
 import SigninButton from "@/components/SigninButton";
 import userInfo from "@/FetchFuction/UserRole";
 import { db } from "@/lib/db";
-
-
-
-
 const page = async () => {
 	const { role } = await userInfo();
 
