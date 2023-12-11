@@ -1,5 +1,5 @@
 "use client"
-import { FeaturedUniversityAdd, FeaturedUniversityEdit } from "@/action/action";
+import { FeaturedUniversityAdd } from "@/action/action";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input } from "@nextui-org/react";
 
 import { useRouter } from "next/navigation";
