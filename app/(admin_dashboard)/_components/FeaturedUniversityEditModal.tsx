@@ -1,5 +1,5 @@
 "use client"
-import { FeaturedUniversityEdit } from "@/action/action";
+import { FeaturedUniversityDelete, FeaturedUniversityEdit } from "@/action/action";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input } from "@nextui-org/react";
 import { FeaturedUniversity } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -34,6 +34,18 @@ export default function FeaturedUniversityEditModal({ data }: featuredUniversity
         }
     }
 
+    const onDelete = async (id: string) => {
+        try {
+            await FeaturedUniversityDelete(id);
+            toast.success("Deleted Successfully");
+            router.refresh();
+        } catch (error) {
+            toast.error("Something went wrong");
+
+        }
+
+    }
+
 
     return (
         <>
@@ -55,19 +67,23 @@ export default function FeaturedUniversityEditModal({ data }: featuredUniversity
 
                     <>
                         <ModalHeader className="flex flex-col gap-1">Modify Featured University</ModalHeader>
+
                         <ModalBody>
                             <Input value={university_name} onChange={(e) => setName(e.target.value)} type="text" variant={"underlined"} label="University Name" isRequired />
                             <Input value={image_url} onChange={(e) => setUrl(e.target.value)} type="url" variant={"underlined"} label="Image Url" isRequired />
                             <Input value={href || ""} onChange={(e) => sethref(e.target.value)} type="text" variant={"underlined"} label="href" />
 
                         </ModalBody>
+
                         <ModalFooter>
                             <Button color="danger" variant="light" onPress={() => setISOpen(false)}>
                                 Close
                             </Button>
-                            <Button color="danger" onPress={onSubmit}>
+                            <Button color="warning" onPress={onSubmit}>
                                 Update
                             </Button>
+                            <Button color="danger" onPress={() => onDelete(id)}>Delete</Button>
+
                         </ModalFooter>
                     </>
 

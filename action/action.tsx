@@ -3,7 +3,6 @@
 import { db } from "@/lib/db"
 
 export const FeaturedUniversityEdit = async (id: string, university_name: string, image_url: string, href: string | null,) => {
-    console.log(id, university_name, image_url, href)
     const response = await db.featuredUniversity.update({
         where: {
             id: id
@@ -23,4 +22,10 @@ export const FeaturedUniversityAdd = async (university_name: string, image_url: 
     })
     return response;
 
+}
+
+export const FeaturedUniversityDelete = async (id: string) => {
+    const response = await db.featuredUniversity.delete({
+        where: { id }
+    });
 }
