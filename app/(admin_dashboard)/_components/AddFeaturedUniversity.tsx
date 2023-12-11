@@ -15,7 +15,7 @@ export default function FeaturedUniversityAddModal() {
     const route = useRouter();
     const onSubmit = async () => {
         if (university_name === "" || image_url === "") {
-            toast.error("Image Url and University Name must be provided")
+            toast.error("Image Url and University Name must be provided here")
             return;
         } else {
             try {
