@@ -2,7 +2,7 @@
 import { Suspense } from "react";
 import FeaturedUniversityShowCard from "../../_components/featuredUniversityShowCard";
 import { db } from "@/lib/db";
-import FeaturedUniversityAddModal from "../../_components/AddFeaturedUniversity";
+
 const page = async () => {
     const featuredUniversity = await db.featuredUniversity.findMany()
     return (
