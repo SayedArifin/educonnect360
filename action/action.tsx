@@ -29,3 +29,43 @@ export const FeaturedUniversityDelete = async (id: string) => {
         where: { id }
     });
 }
+
+export const FetchApplications = async () => {
+    const applications = await db.applyUniversity.findMany({
+        select: {
+            id: true, application_status: true, university_name: true
+        }
+    });
+    return applications;
+}
+export const FetchApplicationById = async (id: string) => {
+    const application = await db.applyUniversity.findFirst({
+        where: {
+            id
+        }
+    })
+    return application;
+}
+
+export const RejectApplicationById = async (id: string) => {
+    await db.applyUniversity.update({
+        where: {
+            id
+        }, data: {
+            application_status: 3
+        }
+    })
+    return;
+}
+
+export const ApproveApplicationById = async (id: string, kyc_date: string | undefined) => {
+    await db.applyUniversity.update({
+        where: {
+            id
+        }, data: {
+            application_status: 1,
+            kyc_date
+        }
+    })
+    return;
+}
