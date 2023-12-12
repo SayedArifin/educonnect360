@@ -29,7 +29,7 @@ export default async function page() {
                         University Representative
                     </h1>
                     <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">We are processing your Application. It can take upto 2 working days</p>
-                    <Button className="w-full font-bold" variant="light"><Link href={"/"}>Back to Home</Link></Button>
+                    <Button className="w-fit font-bold" variant="light"><Link href={"/"}>Back to Home</Link></Button>
                 </CardBody>
             </Card>
 
@@ -59,7 +59,7 @@ export default async function page() {
                             </ul>
                         </div>
                     </div>
-                    <Button className="w-full font-bold" variant="light"><Link href={"/"}>Back to Home</Link></Button>
+                    <Button className="w-fit font-bold" variant="light"><Link href={"/"}>Back to Home</Link></Button>
                 </CardBody>
             </Card>
 
@@ -74,7 +74,7 @@ export default async function page() {
                         University Representative
                     </h1>
                     <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">No need to apply again</p>
-                    <Button className="w-full font-bold" variant="light"><Link href={"/"}>Back to Home</Link></Button>
+                    <Button className="w-fit font-bold" variant="light"><Link href={"/"}>Back to Home</Link></Button>
 
                 </CardBody>
             </Card>

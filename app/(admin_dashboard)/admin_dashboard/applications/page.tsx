@@ -1,5 +1,5 @@
 
-import Loading from "@/app/loadingaaa";
+import Loading from "@/app/LoadingSpinner";
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import { Suspense } from "react";
 import AccordionCard from "../../_components/AccordionCard";

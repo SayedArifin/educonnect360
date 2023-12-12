@@ -1,33 +1,43 @@
 
+
+
+
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeSwitch } from "@/components/theme-switch";
 import Link from 'next/link';
 import { FaHome, FaPaperclip } from 'react-icons/fa';
 import { BiMenuAltLeft } from "react-icons/bi";
-import { GiFeather } from "react-icons/gi";
+import { MdPublishedWithChanges } from "react-icons/md";
+import { GetUniversityName } from '@/action/action';
 import { usePathname } from 'next/navigation';
 
 interface SidebarProps {
     children: React.ReactNode;
+    email: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+const Sidebar: React.FC<SidebarProps> = ({ children, email }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const pathname = usePathname()
-
+    const [u_name, setName] = useState("");
+    const pathname = usePathname();
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await GetUniversityName(email)
+            setName(res?.university_name || "")
+
+        }
+        fetchData();
+    }, [email])
 
     const sidebarItems = [
-        { icon: <FaHome />, text: "Dashboard", href: "/admin_dashboard" },
-        {
-            icon: <FaPaperclip />,
-            text: "Applications",
-            href: "/admin_dashboard/applications",
-        }, { icon: <GiFeather />, text: "UI/UX Update", href: "/admin_dashboard/ui_update" },
+        { icon: <FaHome />, text: "Dashboard", href: "/university_dashboard" },
+        { icon: <MdPublishedWithChanges />, text: "Modify University", href: "/university_dashboard/modify" },
+
 
     ];
 
@@ -41,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                                 <BiMenuAltLeft size={25} className='mr-2' />
                             </button>
                             <p className="font-bold text-inherit text-2xl">
-                                EduConnect<span className="text-pink-500">360</span>°<span className="text-sm">admin</span>
+                                EduConnect<span className="text-pink-500">360</span>°<span className="text-sm">{u_name}</span>
                             </p>
                         </div>
                         <div className="flex items-center">
@@ -59,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                     <ul className="space-y-2 font-medium">
                         {sidebarItems.map((item, index) => (
                             <li key={index}>
-                                <Link href={item.href} className={` ${item.href === pathname && "bg-gray-200"}`}>
+                                <Link href={item.href} className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${item.href === pathname && "bg-gray-200 dark:bg-gray-700"}`}>
                                     {item.icon}
                                     <span className="ms-3 flex-1 whitespace-nowrap">{item.text}</span>
 

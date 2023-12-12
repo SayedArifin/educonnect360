@@ -69,3 +69,21 @@ export const ApproveApplicationById = async (id: string, kyc_date: string | unde
     })
     return;
 }
+
+export const MakeRepById = async (id: string) => {
+    await db.applyUniversity.update({
+        where: {
+            id
+        }, data: {
+            application_status: 2
+        }
+    })
+    return;
+}
+
+export const GetUniversityName = async (email: string) => {
+    const res = await db.applyUniversity.findFirst({
+        where: { r_email: email }, select: { university_name: true }
+    })
+    return res;
+}

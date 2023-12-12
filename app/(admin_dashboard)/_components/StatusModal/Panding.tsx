@@ -2,7 +2,7 @@
 import { ApproveApplicationById, FetchApplicationById, RejectApplicationById } from "@/action/action";
 import LabelData from "@/components/LabelData";
 import { Button } from "@nextui-org/button";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Checkbox, Input, Link } from "@nextui-org/react"
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Input, Link } from "@nextui-org/react"
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -71,10 +71,11 @@ const Panding: React.FC<PandingProps> = ({ id }) => {
 
     return (
         <>
-            <Button onPress={() => setIsOpen(true)} color="danger" variant="ghost">Open Modal</Button>
+            <Button onPress={() => setIsOpen(true)} color="danger" variant="ghost">Details</Button>
             <Modal
                 backdrop="blur"
                 isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
                 onOpenChange={onOpenChange}
                 placement="bottom-center"
             >
@@ -82,7 +83,7 @@ const Panding: React.FC<PandingProps> = ({ id }) => {
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col gap-1">Panding Application Request</ModalHeader>
-                            <ModalBody>
+                            <ModalBody >
                                 <LabelData data={r_name} label="Full Name" />
                                 <LabelData data={r_email} label="Email Address" />
                                 <LabelData data={r_number} label="Phone Number" />

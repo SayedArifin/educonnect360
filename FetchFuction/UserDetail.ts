@@ -3,27 +3,25 @@ import { getServerSession } from "next-auth";
 import { db } from "@/lib/db";
 import { Session } from "next-auth";
 import { authOptions } from "@/app/option";
+import { User } from "@prisma/client";
 
 interface UserInfo {
-    session: Session | null;
-    role: {
-        role: string | null;
-    } | null;
+    details: User | null;
 }
 
-const userInfo = async (): Promise<UserInfo> => {
-    let role = null;
+const userDetail = async (): Promise<UserInfo> => {
+    let details = null;
 
     const session = await getServerSession(authOptions);
     if (session) {
-        role = await db.user.findFirst({
+        details = await db.user.findFirst({
             where: { email: session?.user?.email as string },
-            select: { role: true, id: true },
+
         });
     }
 
-    return { session, role };
+    return { details };
 };
 
-export default userInfo;
+export default userDetail;
 

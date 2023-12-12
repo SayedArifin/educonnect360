@@ -56,7 +56,7 @@ const page = async () => {
 
 					{role && role.role === "1" && (
 						<div className="group relative">
-							<Link className="hover:text-primary-red" href={"/university"}>
+							<Link className="hover:text-primary-red" href={"/university_dashboard"}>
 
 								<FaUniversity size={30} />
 							</Link>
