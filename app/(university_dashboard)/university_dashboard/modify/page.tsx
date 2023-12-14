@@ -5,10 +5,9 @@ import Progressbar from "../../_component/Progressbar";
 import UniversityInfo from "../../_component/UniversityInfo";
 import { getDepartment } from "@/action/action";
 
-interface pageProps {
-}
 
-const page: React.FC<pageProps> = async () => {
+
+const page = async () => {
     const department = await getDepartment();
 
 
