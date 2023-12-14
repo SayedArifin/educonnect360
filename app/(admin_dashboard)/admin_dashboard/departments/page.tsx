@@ -5,10 +5,8 @@ import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
 import { revalidatePath } from "next/cache";
 import { getDepartment } from "@/action/action";
 
-interface pageProps {
-}
 
-const page: React.FC<pageProps> = async () => {
+const page = async () => {
     const department = await getDepartment();
 
     const onDelete = async (formData: FormData) => {
