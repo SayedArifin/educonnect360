@@ -87,3 +87,8 @@ export const GetUniversityName = async (email: string) => {
     })
     return res;
 }
+
+export const getDepartment = async () => {
+    const res = await db.department.findMany()
+    return res;
+}

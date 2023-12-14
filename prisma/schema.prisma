@@ -37,3 +37,9 @@ model FeaturedUniversity {
   image_url       String
   href            String?
 }
+
+model department {
+  id            String @id @default(uuid()) @map("_id")
+  dpt_name      String @unique
+  dpt_shortName String @unique
+}
