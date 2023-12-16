@@ -1,4 +1,3 @@
-"use client"
 "use client";
 import { useState } from "react";
 import {
@@ -17,9 +16,11 @@ import {
 import { AiFillPlusCircle } from "react-icons/ai";
 import { IoIosRemoveCircle } from "react-icons/io";
 import ReactMarkdown from 'react-markdown';
+import { University } from "@prisma/client";
 
 interface UniversityInfoProps {
     department: { id: string; dpt_name: string; dpt_shortName: string; }[];
+    university: University | null;
 }
 
 interface Branch {
@@ -29,21 +30,26 @@ interface Branch {
     faculties: string[];
 }
 
-const UniversityInfo: React.FC<UniversityInfoProps> = ({ department }) => {
+const UniversityInfo: React.FC<UniversityInfoProps> = ({ department, university }) => {
+    console.log(university);
     const [isEditable, setIsEditable] = useState(false);
 
-    const [yearOfEstablishment, setYearOfEstablishment] = useState("");
-    const [viceChancellorName, setViceChancellorName] = useState("");
-    const [registrarName, setRegistrarName] = useState("");
-    const [officialWebsite, setOfficialWebsite] = useState("");
-    const [availableDegrees, setAvailableDegrees] = useState(["becelor"]);
-    const [allFaculties, setAllFaculties] = useState<string[]>([]);
-    const [emailAddress, setEmailAddress] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [faxNumber, setFaxNumber] = useState("");
+    const [yearOfEstablishment, setYearOfEstablishment] = useState<any>(university?.yearOfEstablishment);
+    const [viceChancellorName, setViceChancellorName] = useState(university?.viceChancellorName);
+    const [registrarName, setRegistrarName] = useState(university?.registrarName);
+    const [officialWebsite, setOfficialWebsite] = useState(university?.officialWebsite);
+    const [availableDegrees, setAvailableDegrees] = useState(university?.availableDegrees);
+    const [allFaculties, setAllFaculties] = useState(university?.allFaculties || []);
+    const [emailAddress, setEmailAddress] = useState(university?.emailAddress);
+    const [phoneNumber, setPhoneNumber] = useState(university?.phoneNumber);
+    const [faxNumber, setFaxNumber] = useState(university?.faxNumber);
     const [branches, setBranches] = useState<Branch[]>([{ name: "", address: "", helpline: "", faculties: [] }]);
-    const [markdownContent, setMarkdownContent] = useState("");
-    const [facultyInfo, setFacultyInfo] = useState<{ totalCost: string; minimumCredits: string; id: string }[]>([]);
+    const [markdownContent, setMarkdownContent] = useState(university?.markdownContent || "");
+    const [facultyInfo, setFacultyInfo] = useState(university?.facultyInfo || {});
+    const [hasLab, setHasLab] = useState(university?.hasLab || false);
+    const [hasPlayground, setHasPlayground] = useState(university?.hasPlayground || false);
+    const [hasElectricity, setHasElectricity] = useState(university?.hasElectricity || false);
+    const [hasClub, setHasClub] = useState(university?.hasClub || false);
     const getShortNameById = (id: string): string | null => {
         const dpt = department.find((dept) => dept.id === id);
         return dpt ? dpt.dpt_shortName : null;
@@ -63,7 +69,6 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({ department }) => {
             )
         );
     };
-    console.log(facultyInfo)
     const handleFacultyChange = (index: number, selectedFaculties: string[]) => {
         setBranches((prevBranches) =>
             prevBranches.map((branch, i) =>
@@ -80,10 +85,47 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({ department }) => {
             </div>
             <Divider className="my-4" />
             <h5 className="text-xl font-bold dark:text-white">General Information</h5>
-            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Year of Establishment:" color="danger" value={yearOfEstablishment} onChange={(e) => setYearOfEstablishment(e.target.value)} />
-            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Vice Chancellor Name:" color="danger" value={viceChancellorName} onChange={(e) => setViceChancellorName(e.target.value)} />
-            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Registrar Name:" color="danger" value={registrarName} onChange={(e) => setRegistrarName(e.target.value)} />
-            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Official Website:" color="danger" value={officialWebsite} onChange={(e) => setOfficialWebsite(e.target.value)} />
+            <Input type="number" isReadOnly={!isEditable} variant="underlined" label="Year of Establishment:" color="danger" value={yearOfEstablishment} onChange={(e) => setYearOfEstablishment(e.target.value)} />
+            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Vice Chancellor Name:" color="danger" value={viceChancellorName || ""} onChange={(e) => setViceChancellorName(e.target.value)} />
+            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Registrar Name:" color="danger" value={registrarName || ""} onChange={(e) => setRegistrarName(e.target.value)} />
+            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Official Website:" color="danger" value={officialWebsite || ""} onChange={(e) => setOfficialWebsite(e.target.value)} />
+            <div className="flex justify-between flex-col md:flex-row  gap-2">
+                <div className="facility-checkbox">
+                    <Checkbox isSelected={hasLab} onValueChange={setHasLab}>
+                        Proper Lab Facilities
+                    </Checkbox>
+                    <p className="text-status">
+                        Status: {hasLab ? "Available" : "Not Available"}
+                    </p>
+                </div>
+
+                <div className="facility-checkbox">
+                    <Checkbox isSelected={hasPlayground} onValueChange={setHasPlayground}>
+                        Proper Playground
+                    </Checkbox>
+                    <p className="text-status">
+                        Status: {hasPlayground ? "Available" : "Not Available"}
+                    </p>
+                </div>
+
+                <div className="facility-checkbox">
+                    <Checkbox isSelected={hasElectricity} onValueChange={setHasElectricity}>
+                        Reliable Electricity
+                    </Checkbox>
+                    <p className="text-status">
+                        Status: {hasElectricity ? "Available" : "Not Available"}
+                    </p>
+                </div>
+                <div className="facility-checkbox">
+                    <Checkbox isSelected={hasClub} onValueChange={setHasClub}>
+                        Individual Club
+                    </Checkbox>
+                    <p className="text-status">
+                        Status: {hasClub ? "Available" : "Not Available"}
+                    </p>
+                </div>
+
+            </div>
             <CheckboxGroup
                 isReadOnly={!isEditable}
                 orientation="horizontal"
@@ -134,9 +176,7 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({ department }) => {
                     </thead>
                     <tbody>
 
-
-
-                        {allFaculties.map((id, index) => (
+                        {allFaculties?.map((id, index) => (
                             <tr key={id} className=" border-b">
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {getShortNameById(id)}
@@ -146,12 +186,12 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({ department }) => {
                                         endContent="BDT"
                                         variant="underlined"
                                         color="danger"
-                                        value={facultyInfo[index]?.totalCost || ""}
-                                        onChange={(e) => setFacultyInfo((prevInfo) => [
-                                            ...prevInfo.slice(0, index),
-                                            { ...prevInfo[index], totalCost: e.target.value, id, minimumCredits: prevInfo[index]?.minimumCredits || "" },
-                                            ...prevInfo.slice(index + 1),
-                                        ])}
+                                        value={facultyInfo[index]?.totalCost}
+                                        onChange={(e) => setFacultyInfo((prevInfo) => {
+                                            const newInfo = [...prevInfo];
+                                            newInfo[index] = { ...newInfo[index], totalCost: e.target.value, id, minimumCredits: newInfo[index]?.minimumCredits || "" };
+                                            return newInfo;
+                                        })}
                                     />
                                 </td>
                                 <td className="px-6 py-4">
@@ -159,26 +199,24 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({ department }) => {
                                         variant="underlined"
                                         color="danger"
                                         value={facultyInfo[index]?.minimumCredits || ""}
-                                        onChange={(e) => setFacultyInfo((prevInfo) => [
-                                            ...prevInfo.slice(0, index),
-                                            { ...prevInfo[index], minimumCredits: e.target.value, id, totalCost: prevInfo[index]?.totalCost || "" },
-                                            ...prevInfo.slice(index + 1),
-                                        ])}
+                                        onChange={(e) => setFacultyInfo((prevInfo) => {
+                                            const newInfo = [...prevInfo];
+                                            newInfo[index] = { ...newInfo[index], minimumCredits: e.target.value, id, totalCost: newInfo[index]?.totalCost || "" };
+                                            return newInfo;
+                                        })}
                                     />
                                 </td>
                             </tr>
                         ))}
-
-
-
                     </tbody>
                 </table>
             </div>
 
+
             <h5 className="text-xl font-bold dark:text-white">Contact Information</h5>
-            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Email Address:" color="danger" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
-            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Telephone / Mobile Number:" color="danger" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Fax Number:" color="danger" value={faxNumber} onChange={(e) => setFaxNumber(e.target.value)} />
+            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Email Address:" color="danger" value={emailAddress || ""} onChange={(e) => setEmailAddress(e.target.value)} />
+            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Telephone / Mobile Number:" color="danger" value={phoneNumber || ""} onChange={(e) => setPhoneNumber(e.target.value)} />
+            <Input type="text" isReadOnly={!isEditable} variant="underlined" label="Fax Number:" color="danger" value={faxNumber || ""} onChange={(e) => setFaxNumber(e.target.value)} />
 
             <h5 className="text-xl font-bold dark:text-white">Branch Information</h5>
             {branches.map((branch, index) => (
@@ -278,6 +316,7 @@ const UniversityInfo: React.FC<UniversityInfoProps> = ({ department }) => {
                     </Card>
                 </div>
             </div>
+
         </div>
     );
 };

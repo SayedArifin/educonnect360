@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 
 import { db } from "@/lib/db";
-import { Session } from "next-auth";
 import { authOptions } from "@/app/option";
 import { User } from "@prisma/client";
 

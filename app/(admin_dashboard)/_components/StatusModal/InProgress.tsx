@@ -56,7 +56,7 @@ const InProgress: React.FC<InProgressProps> = ({ id }) => {
         setDisabled(true)
         try {
             await MakeRepById(id)
-            toast.success("Application is in Progress now")
+            toast.success("Application is Approved")
             router.refresh()
             setDisabled(false)
             setIsOpen(false)

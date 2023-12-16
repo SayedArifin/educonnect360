@@ -71,14 +71,21 @@ export const ApproveApplicationById = async (id: string, kyc_date: string | unde
 }
 
 export const MakeRepById = async (id: string) => {
-    await db.applyUniversity.update({
+    const res = await db.applyUniversity.update({
         where: {
             id
         }, data: {
             application_status: 2
         }
     })
-    return;
+    if (res) {
+        await db.university.create({
+            data: {
+                applicationId: res.id, university_name: res.university_name
+            }
+        })
+    }
+    return res;
 }
 
 export const GetUniversityName = async (email: string) => {
